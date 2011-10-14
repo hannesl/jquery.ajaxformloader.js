@@ -6,7 +6,7 @@ An ajax form loader plugin.
 
   $("#container").ajaxFormLoaderForm(options);
 
-#container needs to contain a link to the target form page. This way, users without JS will still be able to use the form. The link has no be the first link in #container. The target form page should respond with a result message containing a specific class for when the submission was successful (see Options).
+\#container needs to contain a link to the target form page. This way, users without JS will still be able to use the form. The link has no be the first link in #container. The target form page should respond with a result message containing a specific class for when the submission was successful (see Options).
 
 ## Options
 
