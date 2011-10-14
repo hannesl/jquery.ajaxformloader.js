@@ -1,6 +1,6 @@
 # jquery.ajaxformloader.js
 
-An ajax form loader plugin.
+An ajax form loader plugin. It takes a link to a form page and turns it into a toggle for loading and embedding the form on the page. The form can then be submitted through ajax.
 
 ## Usage
 
