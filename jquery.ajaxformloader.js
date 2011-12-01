@@ -68,7 +68,7 @@
         else {
           $ajaxWrapper.removeClass("expanded");
           // Reset the form.
-          if (!$(ajaxDiv).hasClass("form-loaded")) {
+          if (!$(ajaxDiv).hasClass("form-loaded") && $formDiv.empty) {
             $formDiv.empty();
             $formDiv = null;
           }
