@@ -68,7 +68,7 @@
         else {
           $ajaxWrapper.removeClass("expanded");
           // Reset the form.
-          if (!$(ajaxDiv).hasClass("form-loaded") && $formDiv.empty) {
+          if (!$(ajaxDiv).hasClass("form-loaded") && $formDiv instanceof jQuery) {
             $formDiv.empty();
             $formDiv = null;
           }
@@ -87,7 +87,7 @@
       
       // Collect form values.
       var vars = {};
-      $formWrapper.find("input, textarea").each(function() {
+      $formWrapper.find("input, textarea").each(function() {
         vars[$(this).attr("name")] = $(this).attr("value");
       }).attr("disabled", "disabled");
       
