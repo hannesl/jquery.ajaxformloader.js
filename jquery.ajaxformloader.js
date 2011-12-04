@@ -34,6 +34,7 @@
     // Set up form div.
     var ajaxDiv = document.createElement("div");
     ajaxDiv.setAttribute("class", opts.className + "-form");
+    ajaxDiv.setAttribute("style", "display: none");
     $ajaxWrapper.append(ajaxDiv);
 
     var $formDiv;
@@ -54,6 +55,8 @@
             $formDiv = $(document.createElement("div"));
             $formDiv.attr("class", "form-wrapper");
             $formDiv.load($toggle.attr("href") + ' ' + opts.formSelector, function() {
+              // Trigger the load-complete event.
+              $ajaxWrapper.trigger("ajaxformloader-load-complete");
               $(ajaxDiv).removeClass("loading");
               $(ajaxDiv).addClass("form-loaded");
               
@@ -100,9 +103,13 @@
           // Remove the form.
           $formWrapper.empty();
           $(ajaxDiv).removeClass("form-loaded");
+          // Trigger the submit-success event.
+          $ajaxWrapper.trigger("ajaxformloader-submit-success");
         }
         else {
           $formWrapper.find("input, textarea").attr("disabled", "");
+          // Trigger the submit-fail event.
+          $ajaxWrapper.trigger("ajaxformloader-submit-fail");
         }
         $formWrapper.prepend(content.html());
         $(ajaxDiv).removeClass("loading");
