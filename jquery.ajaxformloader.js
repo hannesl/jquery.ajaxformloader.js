@@ -1,5 +1,5 @@
 (function($) {
- 
+
   /**
    * An ajax form loader plugin.
    * 
@@ -35,6 +35,10 @@
     var ajaxDiv = document.createElement("div");
     ajaxDiv.setAttribute("class", opts.className + "-form");
     ajaxDiv.setAttribute("style", "display: none");
+    var messagesDiv = document.createElement("div");
+    messagesDiv.setAttribute("class", "form-messages");
+    messagesDiv.setAttribute("style", "display: none");
+    ajaxDiv.appendChild(messagesDiv);
     $ajaxWrapper.append(ajaxDiv);
 
     var $formDiv;
@@ -53,7 +57,7 @@
           if ($formDiv == null) {
             // Load the form.
             $formDiv = $(document.createElement("div"));
-            $formDiv.attr("class", "form-wrapper");
+            $formDiv.attr("class", "form-wrapper").css("display", "none");
             $formDiv.load($toggle.attr("href") + ' ' + opts.formSelector, function() {
               // Trigger the load-complete event.
               $ajaxWrapper.trigger("ajaxformloader-load-complete");
@@ -64,7 +68,7 @@
                 submitForm($formDiv);
                 return false;
               });
-              $formDiv.appendTo($(ajaxDiv));
+              $formDiv.appendTo($(ajaxDiv)).slideDown(50);
             });
           }
         }
@@ -73,6 +77,7 @@
           // Reset the form.
           if (!$(ajaxDiv).hasClass("form-loaded") && $formDiv instanceof jQuery) {
             $formDiv.empty();
+            $(messagesDiv).empty();
             $formDiv = null;
           }
         }
@@ -84,8 +89,8 @@
       $(ajaxDiv).addClass("loading");
       
       // Remove old messages.
-      $formWrapper.find(".messages").slideUp(50, function() {
-        $(this).remove();
+      $(messagesDiv).slideUp(50, function() {
+        $(this).empty();
       });
       
       // Collect form values.
@@ -101,7 +106,9 @@
         var content = $(data).find(opts.messageSelector);
         if (content.find(opts.successfulSelector).length > 0) {
           // Remove the form.
-          $formWrapper.empty();
+          $formWrapper.slideUp(50, function() {
+            $(this).empty();
+          });
           $(ajaxDiv).removeClass("form-loaded");
           // Trigger the submit-success event.
           $ajaxWrapper.trigger("ajaxformloader-submit-success");
@@ -111,7 +118,7 @@
           // Trigger the submit-fail event.
           $ajaxWrapper.trigger("ajaxformloader-submit-fail");
         }
-        $formWrapper.prepend(content.html());
+        $(messagesDiv).html(content.html()).slideDown(50);
         $(ajaxDiv).removeClass("loading");
       });
     }
