@@ -95,9 +95,10 @@
       
       // Collect form values.
       var vars = {};
-      $formWrapper.find("input, textarea").each(function() {
-        vars[$(this).attr("name")] = $(this).attr("value");
-      }).attr("disabled", "disabled");
+      $.each($formWrapper.find("form").serializeArray(), function(i, field) {
+        vars[field.name] = field.value;
+      });
+      $formWrapper.find("input, textarea").attr("disabled", "disabled");
       
       // Post the form.
       var url = $formWrapper.find("form").attr('action');
